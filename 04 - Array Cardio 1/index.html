@@ -56,27 +56,45 @@
 
         // Array.prototype.sort()
         // 3. Sort the inventors by birthdate, oldest to youngest
-        const inventorsSortByBirthdate = inventors.sort((a, b) => a.year - b.year)
+        const ordered = inventors.sort((a, b) => a.year - b.year);
+
 
         // Array.prototype.reduce()
         // 4. How many years did all the inventors live all together?
-        const yearsInventorsLiveTogether = inventors.reduce((accumulator, currentValue) => { accumulator },)
-        console.log("Number of years all inventors lived together", yearsInventorsLiveTogether)
+        const yearsInventorsLiveTogether = inventors.reduce((total, inventor) => {
+            return total + (inventor.passed - inventor.year)
+        }, 0)
 
         // 5. Sort the inventors by years lived
         const inventorsByYearsLived = inventors.sort((a, b) => (b.passed - b.year) - (a.passed - a.year));
 
         // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
         // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-
+        const mwCategory = document.querySelector(".mw-category");
+        if (mwCategory) {
+            const links = mwCategory.querySelectorAll("a")
+            const linkTextArray = Array.from(links).map((link) => {
+                return link.textContent
+            })
+            const containsDe = linkTextArray.filter(text => text.includes('de'))
+        }
 
         // 7. sort Exercise
         // Sort the people alphabetically by last name
-
+        const peopleSort = people.sort((lastPerson, nextPerson) => {
+            const [aLast, aFirst] = lastPerson.split(", ")
+            const [bLast, bFirst] = nextPerson.split(", ")
+            return aLast > bLast ? 1 : -1
+        })
 
         // 8. Reduce Exercise
         // Sum up the instances of each of these
         const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck'];
+        const dataSum = data.reduce((accumulator, currentValue) => {
+            accumulator[currentValue] = (accumulator[currentValue] || 0) + 1;
+            return accumulator
+        }, {})
+        console.log(dataSum)
 
     </script>
 </body>
